@@ -315,6 +315,24 @@ body.invitation-open #music-toggle{ transform:translateY(0); }
   color:#3a2140; border-radius:2px;
   box-shadow:0 25px 50px -15px rgba(0,0,0,.55);
   position:relative;
+  padding-bottom:4.5rem !important;
+}
+.paper-leaf::after{
+  content:'❤'; position:absolute; left:18px; bottom:16px; right:auto;
+  width:44px; height:44px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.95rem; color:#8a3d52;
+  border:1.5px dashed rgba(138,61,82,.35);
+  transform:rotate(-12deg); opacity:.7;
+  pointer-events:none;
+}
+.paper-leaf .letter-sign{
+  text-align:right;
+  margin:2rem 0 0;
+  padding-right:4px;
+  max-width:100%;
+  line-height:1.4;
+  word-break:break-word;
 }
 .paper-leaf::before{
   content:''; position:absolute; inset:0; border-radius:2px;
@@ -363,12 +381,19 @@ body.invitation-open #music-toggle{ transform:translateY(0); }
 .carousel-item{
   position:absolute; top:50%; left:50%; width:220px; height:290px;
   margin:-145px 0 0 -110px; border-radius:14px; overflow:hidden; cursor:pointer;
-  box-shadow:0 30px 50px -20px rgba(0,0,0,.6); border:1px solid rgba(201,160,106,.25);
+  background:transparent; border:none;
+  box-shadow:0 18px 40px rgba(0,0,0,.45);
   transition: box-shadow .3s;
   backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
 }
-.carousel-item img{ width:100%; height:100%; object-fit:cover; }
-.carousel-item.active{ box-shadow:0 30px 60px -10px rgba(217,143,160,.4), 0 0 0 2px var(--gold-light); }
+.carousel-item img{
+  width:100%; height:100%; object-fit:cover; display:block;
+  background:transparent;
+}
+.carousel-item.active{
+  box-shadow:0 22px 48px rgba(0,0,0,.55);
+}
 
 /* ============ CAKE ============ */
 /* ============ REALISTIC CAKE ============ */
@@ -424,6 +449,137 @@ body.invitation-open #music-toggle{ transform:translateY(0); }
   cursor:pointer;
 }
 .blow-all-btn:disabled{ opacity:.55; cursor:default; }
+
+/* ============ ROMANTIC EXTRAS ============ */
+#petal-layer{
+  position:fixed; inset:0; z-index:15; pointer-events:none; overflow:hidden;
+  opacity:0; transition:opacity 1.2s ease;
+}
+body.invitation-open #petal-layer{ opacity:1; }
+.petal{
+  position:absolute; top:-40px; font-size:14px; color:rgba(217,143,160,.75);
+  animation: petal-fall linear forwards;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.2));
+}
+@keyframes petal-fall{
+  0%{ transform:translate3d(0,-10px,0) rotate(0deg); opacity:0; }
+  10%{ opacity:.85; }
+  100%{ transform:translate3d(var(--drift), 110vh, 0) rotate(360deg); opacity:0; }
+}
+.tap-heart{
+  position:fixed; z-index:160; pointer-events:none;
+  font-size:18px; color:#d98fa0;
+  animation: tap-heart-up .9s ease-out forwards;
+  text-shadow:0 0 12px rgba(217,143,160,.55);
+}
+@keyframes tap-heart-up{
+  0%{ transform:translate(-50%,-50%) scale(.4); opacity:0; }
+  20%{ opacity:1; transform:translate(-50%,-60%) scale(1.15); }
+  100%{ transform:translate(-50%,-140%) scale(.8); opacity:0; }
+}
+
+.love-send{
+  position:relative; max-width:420px; margin:0 auto;
+  padding:28px 22px 32px; border-radius:28px; text-align:center;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(217,143,160,.16), transparent 55%),
+    linear-gradient(180deg, rgba(243,234,217,.06), rgba(92,31,52,.18));
+  border:1px solid rgba(201,160,106,.28);
+  box-shadow:0 20px 50px rgba(0,0,0,.28);
+}
+.love-heart-btn{
+  width:120px; height:120px; border-radius:50%; margin:18px auto 14px;
+  border:1px solid rgba(232,207,160,.35);
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,.2), transparent 40%),
+    linear-gradient(160deg, #d98fa0, #5c1f34);
+  color:#f3ead9; font-size:2.6rem;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; user-select:none;
+  box-shadow:0 14px 30px rgba(92,31,52,.4), inset 0 1px 0 rgba(255,255,255,.2);
+  transition: transform .15s ease;
+  animation: love-idle 2.4s ease-in-out infinite;
+  -webkit-tap-highlight-color:transparent;
+}
+.love-heart-btn:active, .love-heart-btn.holding{ transform:scale(1.08); animation:none; }
+@keyframes love-idle{
+  0%,100%{ transform:scale(1); box-shadow:0 14px 30px rgba(92,31,52,.4), 0 0 0 0 rgba(217,143,160,.0); }
+  50%{ transform:scale(1.04); box-shadow:0 16px 34px rgba(92,31,52,.45), 0 0 0 12px rgba(217,143,160,.08); }
+}
+.love-meter{
+  width:min(220px, 70%); height:8px; margin:10px auto 0;
+  border-radius:999px; background:rgba(255,255,255,.08); overflow:hidden;
+}
+.love-meter-fill{
+  height:100%; width:0%; border-radius:inherit;
+  background:linear-gradient(90deg,#e8cfa0,#d98fa0,#c9a06a);
+  transition:width .08s linear;
+}
+.love-hint{
+  margin-top:14px; font-family:'Cormorant Garamond',serif; font-style:italic;
+  color:rgba(232,207,160,.75); font-size:1.05rem;
+}
+.love-result{
+  min-height:28px; margin-top:12px;
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  color:var(--rose); font-size:1.25rem; opacity:0;
+  transition:opacity .5s ease;
+}
+.love-result.show{ opacity:1; }
+.flying-kiss{
+  position:fixed; z-index:170; pointer-events:none; font-size:20px;
+  animation: kiss-fly 1.4s ease-out forwards;
+}
+@keyframes kiss-fly{
+  0%{ transform:translate(-50%,0) scale(.6); opacity:0; }
+  15%{ opacity:1; }
+  100%{ transform:translate(calc(-50% + var(--kx)), -180px) scale(1.2); opacity:0; }
+}
+
+.promise-card{
+  max-width:440px; margin:0 auto; perspective:1000px;
+}
+.promise-inner{
+  position:relative; min-height:220px; transform-style:preserve-3d;
+  transition: transform .8s cubic-bezier(.22,1,.36,1);
+}
+.promise-card.open .promise-inner{ transform:rotateY(180deg); }
+.promise-face{
+  position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  border-radius:18px; padding:28px 24px; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center;
+  border:1px solid rgba(201,160,106,.3);
+  box-shadow:0 18px 40px rgba(0,0,0,.3);
+}
+.promise-front{
+  background:linear-gradient(165deg, #3a2140, #1a0f1d);
+  cursor:pointer;
+}
+.promise-back{
+  background:linear-gradient(180deg, #f3ead9, #ece0c9);
+  color:#3a2140; transform:rotateY(180deg);
+}
+.promise-seal{
+  width:64px; height:64px; border-radius:50%; margin-bottom:14px;
+  background:radial-gradient(circle at 32% 28%, #f3ead9, #c9a06a 55%, #8a5a2b);
+  display:flex; align-items:center; justify-content:center;
+  color:#5c1f34; font-size:1.4rem;
+  box-shadow:0 0 0 4px rgba(201,160,106,.25), 0 8px 16px rgba(0,0,0,.35);
+}
+.promise-front p{ color:var(--gold-light); font-family:'Cormorant Garamond',serif; font-style:italic; }
+.promise-back .vow{
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-size:1.2rem; line-height:1.6; margin:0;
+}
+.section-ornament{
+  display:flex; align-items:center; justify-content:center; gap:12px;
+  margin:8px auto 0; color:rgba(201,160,106,.55); font-size:.85rem;
+}
+.section-ornament::before,
+.section-ornament::after{
+  content:''; width:42px; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(201,160,106,.55), transparent);
+}
 
 #flame-canvas{ position:absolute; }
 .wick-blown .flame-glow{ opacity:0; }
@@ -573,7 +729,9 @@ section{
 
   .flip-unit{ width:56px; height:70px; }
   .flip-card-face{ font-size:1.45rem; }
-  .paper-leaf{ padding:1.35rem 1.05rem !important; }
+  .paper-leaf{ padding:1.35rem 1.05rem 4.25rem !important; }
+  .paper-leaf::after{ left:14px; bottom:14px; width:40px; height:40px; font-size:.85rem; }
+  .paper-leaf .letter-sign{ font-size:1rem; margin-top:1.5rem; }
   .ink-line{ font-size:1.05rem !important; }
 
   #bubble-field{ height:min(58vh, 400px); border-radius:16px; min-height:320px; }
@@ -595,6 +753,9 @@ section{
   #lightbox-img{ max-width:92%; max-height:78%; }
   #lightbox-close{ top:max(12px, env(safe-area-inset-top)); right:max(12px, env(safe-area-inset-right)); }
   #galeri > p.text-sm{ display:none; }
+  .love-heart-btn{ width:104px; height:104px; font-size:2.2rem; }
+  .promise-face{ padding:22px 18px; min-height:200px; }
+  .promise-inner{ min-height:200px; }
 }
 
 @media (max-width:380px){
@@ -641,14 +802,21 @@ const CONFIG = {
     "Caramu percaya sama aku, bahkan waktu aku ragu sama diri sendiri"
   ],
   foto: [
-    "https://images.unsplash.com/photo-1518895312237-a9e23508077d?w=500&q=70",
-    "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500&q=70",
-    "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=500&q=70",
-    "https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=500&q=70",
-    "https://images.unsplash.com/photo-1520763185298-1b434c919102?w=500&q=70",
     "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=500&q=70",
+    "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=500&q=70",
+    "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500&q=70",
+    "https://images.unsplash.com/photo-1519741497674-611481863552?w=500&q=70",
+    "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=500&q=70",
+    "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=500&q=70"
   ],
-  musikUrl: "https://native-aquamarine-l94hh2is.edgeone.dev/Donne%20Maula%20-%20Bercinta%20Lewat%20Kata%20Official%20Lyric%20Video%20OST%20Jatuh%20Cinta%20Seperti%20di%20Film-Film.mp3"
+  musikUrl: "https://native-aquamarine-l94hh2is.edgeone.dev/Donne%20Maula%20-%20Bercinta%20Lewat%20Kata%20Official%20Lyric%20Video%20OST%20Jatuh%20Cinta%20Seperti%20di%20Film-Film.mp3",
+  janji: "Aku janji akan jadi rumah yang hangat buatmu — tempat kamu bisa lelah, tertawa, dan tetap merasa dicintai. Hari ini, besok, dan selama kamu mau bergandengan denganku.",
+  loveNotes: [
+    "Ciuman ini spesial buatmu 💋",
+    "Aku sayang kamu, lebih dari kemarin 🤍",
+    "Semoga harimu selembut pelukan ini ✨",
+    "Kamu adalah favoritku di dunia ini 🌹"
+  ]
 };
 </script>
 
@@ -679,9 +847,11 @@ const CONFIG = {
   <div class="nav-dot active" data-target="hero"></div>
   <div class="nav-dot" data-target="countdown"></div>
   <div class="nav-dot" data-target="surat"></div>
+  <div class="nav-dot" data-target="cinta"></div>
   <div class="nav-dot" data-target="alasan"></div>
   <div class="nav-dot" data-target="galeri"></div>
   <div class="nav-dot" data-target="kue"></div>
+  <div class="nav-dot" data-target="janji"></div>
   <div class="nav-dot" data-target="closing"></div>
 </div>
 
@@ -740,6 +910,9 @@ const CONFIG = {
 </button>
 <audio id="bgm" loop></audio>
 
+<!-- floating petals -->
+<div id="petal-layer" aria-hidden="true"></div>
+
 <!-- =================== HERO =================== -->
 <section id="hero" class="relative min-h-[100svh] flex flex-col items-center justify-center px-5 sm:px-6 text-center z-10 overflow-hidden">
   <div class="hero-orbit -z-10" style="width:min(78vw,520px);height:min(78vw,520px);left:50%;top:50%;transform:translate(-50%,-50%);"></div>
@@ -772,6 +945,21 @@ const CONFIG = {
   <p class="reveal-up uppercase tracking-[0.45em] text-[11px] text-[color:var(--gold)] mb-4 text-center">sepucuk surat</p>
   <h3 class="reveal-up font-display text-4xl md:text-5xl mb-14 text-center" style="color:var(--paper)">Untukmu, dari aku</h3>
   <div class="paper-leaf px-8 py-12 md:px-14 md:py-16" id="letter-box"></div>
+  <div class="section-ornament reveal-up mt-8">❦</div>
+</section>
+
+<!-- =================== KIRIM CINTA =================== -->
+<section id="cinta" class="relative py-28 px-6 z-10">
+  <p class="reveal-up uppercase tracking-[0.45em] text-[11px] text-[color:var(--gold)] mb-4 text-center">interaksi manis</p>
+  <h3 class="reveal-up font-display text-4xl md:text-5xl mb-4 text-center" style="color:var(--paper)">Kirim sedikit cintamu</h3>
+  <p class="reveal-up text-center font-serif italic text-[color:rgba(243,234,217,.65)] mb-10">Tahan hati di tengah, lalu lepaskan — biar ciumannya terbang ke langit</p>
+  <div class="reveal-up love-send">
+    <button type="button" class="love-heart-btn" id="loveHeartBtn" aria-label="Tahan untuk kirim cinta">♥</button>
+    <div class="love-meter"><div class="love-meter-fill" id="loveMeterFill"></div></div>
+    <p class="love-hint" id="loveHint">Tahan hatinya ya~</p>
+    <p class="love-result" id="loveResult"></p>
+  </div>
+  <p class="reveal-up text-center text-xs mt-6 tracking-[0.2em] uppercase text-[color:rgba(201,160,106,.55)]">atau ketuk layar mana saja untuk menabur hati</p>
 </section>
 
 <!-- =================== ALASAN (bubble field) =================== -->
@@ -842,6 +1030,24 @@ const CONFIG = {
     <p class="cake-hint" id="cakeHint">Ketuk tiap api lilin untuk memadamkannya 🕯️</p>
     <button type="button" class="blow-all-btn" id="blowAllBtn">Tiup Semua Lilin</button>
     <p id="cake-msg" class="mt-8 font-serif italic text-2xl text-[color:var(--rose)] opacity-0 transition-opacity duration-700">Semoga semua keinginanmu terkabul 🤍</p>
+  </div>
+</section>
+
+<!-- =================== JANJI =================== -->
+<section id="janji" class="relative py-28 px-6 z-10">
+  <p class="reveal-up uppercase tracking-[0.45em] text-[11px] text-[color:var(--gold)] mb-4 text-center">tertutup lilin malam</p>
+  <h3 class="reveal-up font-display text-4xl md:text-5xl mb-10 text-center" style="color:var(--paper)">Sebuah janji kecil</h3>
+  <div class="reveal-up promise-card" id="promiseCard">
+    <div class="promise-inner">
+      <div class="promise-face promise-front" id="promiseFront">
+        <div class="promise-seal">❤</div>
+        <p>Ketuk segelnya untuk membaca janji</p>
+      </div>
+      <div class="promise-face promise-back">
+        <p class="vow" id="promiseVow"></p>
+        <p class="mt-5 text-sm" style="color:#8a3d52" id="promiseSign"></p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -921,7 +1127,7 @@ if(!isTouch){
 /* ===================================================================
    TOP PROGRESS BAR + SIDE NAV
 =================================================================== */
-const sections = ['hero','countdown','surat','alasan','galeri','kue','closing'];
+const sections = ['hero','countdown','surat','cinta','alasan','galeri','kue','janji','closing'];
 let scrollTicking = false;
 function onScrollUI(){
   const h = document.documentElement;
@@ -1030,6 +1236,7 @@ function openEnvelope(){
     document.body.classList.add('invitation-open');
     revealHeroContent();
     revealName();
+    startPetals();
     ScrollTrigger.refresh();
   }, 2200);
 }
@@ -1055,6 +1262,127 @@ function revealName(){
   const chars = (CONFIG.namaCewek || 'Sayangku').split('');
   el.innerHTML = chars.map(c => `<span style="opacity:0;display:inline-block;transform:translateY(14px)">${c===' '?'&nbsp;':c}</span>`).join('');
   gsap.to(el.children, { opacity:1, y:0, duration:.6, stagger:.06, ease:'power2.out' });
+}
+
+/* ===================================================================
+   ROMANTIC: petals + tap hearts + send love + promise
+=================================================================== */
+const petalLayer = $('#petal-layer');
+const petalChars = ['❀','♡','✾','♥','✧'];
+function spawnPetal(){
+  if(!petalLayer || document.hidden) return;
+  const p = document.createElement('span');
+  p.className = 'petal';
+  p.textContent = petalChars[Math.floor(Math.random()*petalChars.length)];
+  p.style.left = Math.random()*100 + 'vw';
+  p.style.setProperty('--drift', ((Math.random()-.5)*120) + 'px');
+  p.style.fontSize = (12 + Math.random()*10) + 'px';
+  p.style.animationDuration = (7 + Math.random()*7) + 's';
+  petalLayer.appendChild(p);
+  setTimeout(() => p.remove(), 15000);
+}
+function startPetals(){
+  const gap = isLite ? 1600 : 900;
+  spawnPetal();
+  setInterval(spawnPetal, gap);
+}
+
+let lastTapHeart = 0;
+function spawnTapHeart(x, y){
+  const now = Date.now();
+  if(now - lastTapHeart < 120) return;
+  lastTapHeart = now;
+  const h = document.createElement('span');
+  h.className = 'tap-heart';
+  h.textContent = Math.random() > .5 ? '♥' : '♡';
+  h.style.left = x + 'px';
+  h.style.top = y + 'px';
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 950);
+}
+document.addEventListener('pointerdown', (e) => {
+  if(!document.body.classList.contains('invitation-open')) return;
+  if(e.target.closest('button,a,input,textarea,.bubble,.carousel-item,.envelope,.promise-card,#loveHeartBtn')) return;
+  spawnTapHeart(e.clientX, e.clientY);
+}, { passive:true });
+
+const loveBtn = $('#loveHeartBtn');
+const loveFill = $('#loveMeterFill');
+const loveHint = $('#loveHint');
+const loveResult = $('#loveResult');
+let loveCharge = 0, loveTimer = null, loveBusy = false;
+const loveNotes = CONFIG.loveNotes || ['Aku sayang kamu 🤍'];
+
+function startLoveCharge(e){
+  if(loveBusy) return;
+  e.preventDefault();
+  loveBtn.classList.add('holding');
+  loveHint.textContent = 'Terus ditahan... cintanya mengisi ✨';
+  loveTimer = setInterval(() => {
+    loveCharge = Math.min(100, loveCharge + (isLite ? 5 : 4));
+    loveFill.style.width = loveCharge + '%';
+    if(loveCharge >= 100) releaseLove();
+  }, 50);
+}
+function stopLoveCharge(){
+  loveBtn.classList.remove('holding');
+  if(loveTimer){ clearInterval(loveTimer); loveTimer = null; }
+  if(loveCharge < 100 && !loveBusy){
+    loveCharge = Math.max(0, loveCharge - 25);
+    loveFill.style.width = loveCharge + '%';
+    loveHint.textContent = 'Tahan lebih lama ya~';
+  }
+}
+function releaseLove(){
+  if(loveBusy) return;
+  loveBusy = true;
+  if(loveTimer){ clearInterval(loveTimer); loveTimer = null; }
+  loveBtn.classList.remove('holding');
+  loveFill.style.width = '100%';
+  loveHint.textContent = 'Terkirim ke langit malam 🌙';
+  const note = loveNotes[Math.floor(Math.random()*loveNotes.length)];
+  loveResult.textContent = note;
+  loveResult.classList.add('show');
+  const rect = loveBtn.getBoundingClientRect();
+  const cx = rect.left + rect.width/2, cy = rect.top + 10;
+  const n = isLite ? 6 : 10;
+  for(let i=0;i<n;i++){
+    setTimeout(() => {
+      const k = document.createElement('span');
+      k.className = 'flying-kiss';
+      k.textContent = ['💋','♡','♥','✨'][i%4];
+      k.style.left = cx + 'px';
+      k.style.top = cy + 'px';
+      k.style.setProperty('--kx', ((Math.random()-.5)*140) + 'px');
+      document.body.appendChild(k);
+      setTimeout(() => k.remove(), 1500);
+    }, i*70);
+  }
+  safeConfetti({ particleCount: isLite ? 28 : 55, spread:70, origin:{y:.55}, colors:['#e8cfa0','#d98fa0','#c9a06a'] });
+  setTimeout(() => {
+    loveCharge = 0;
+    loveFill.style.width = '0%';
+    loveBusy = false;
+    loveHint.textContent = 'Bisa dikirim lagi kalau mau~';
+  }, 1800);
+}
+if(loveBtn){
+  loveBtn.addEventListener('pointerdown', startLoveCharge);
+  window.addEventListener('pointerup', stopLoveCharge);
+  window.addEventListener('pointercancel', stopLoveCharge);
+  loveBtn.addEventListener('contextmenu', e => e.preventDefault());
+}
+
+const promiseCard = $('#promiseCard');
+const promiseVow = $('#promiseVow');
+const promiseSign = $('#promiseSign');
+if(promiseVow) promiseVow.textContent = CONFIG.janji || 'Aku sayang kamu.';
+if(promiseSign) promiseSign.textContent = '— ' + (CONFIG.namaPengirim || 'Aku');
+if(promiseCard){
+  $('#promiseFront').addEventListener('click', () => {
+    promiseCard.classList.add('open');
+    safeConfetti({ particleCount:30, spread:55, origin:{y:.6}, colors:['#e8cfa0','#d98fa0'] });
+  });
 }
 
 /* ===================================================================
@@ -1117,6 +1445,12 @@ CONFIG.suratCinta.forEach(line => {
   p.textContent = line;
   letterBox.appendChild(p);
 });
+const sign = document.createElement('p');
+sign.className = 'ink-line letter-sign font-display text-lg';
+sign.style.color = '#8a3d52';
+sign.textContent = 'Dengan sepenuh hati,\n' + (CONFIG.namaPengirim || 'Aku');
+sign.style.whiteSpace = 'pre-line';
+letterBox.appendChild(sign);
 gsap.to('.ink-line', {
   opacity:1, y:0, duration:.9, stagger:.25, ease:'power2.out',
   scrollTrigger:{ trigger:'#letter-box', start:'top 75%' }
